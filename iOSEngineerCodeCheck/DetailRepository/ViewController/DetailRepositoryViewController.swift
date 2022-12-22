@@ -1,15 +1,14 @@
 //
-//  ViewController2.swift
+//  DetailRepositoryViewController.swift
 //  iOSEngineerCodeCheck
 //
-//  Created by 史 翔新 on 2020/04/21.
-//  Copyright © 2020 YUMEMI Inc. All rights reserved.
+//  Created by kasiwa on 2022/12/22.
+//  Copyright © 2022 YUMEMI Inc. All rights reserved.
 //
 
 import UIKit
 
-class ViewController2: UIViewController {
-    
+class DetailRepositoryViewController: UIViewController {
     @IBOutlet weak var ImgView: UIImageView!
     
     @IBOutlet weak var TtlLbl: UILabel!
@@ -21,7 +20,7 @@ class ViewController2: UIViewController {
     @IBOutlet weak var FrksLbl: UILabel!
     @IBOutlet weak var IsssLbl: UILabel!
     
-    var vc1: ViewController!
+    var vc1: SearchRepositoryViewController!
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,5 +54,4 @@ class ViewController2: UIViewController {
         }
         
     }
-    
 }
