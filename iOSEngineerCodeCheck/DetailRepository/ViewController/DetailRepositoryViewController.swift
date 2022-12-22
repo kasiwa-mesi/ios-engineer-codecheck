@@ -20,7 +20,7 @@ class DetailRepositoryViewController: UIViewController {
     @IBOutlet weak var FrksLbl: UILabel!
     @IBOutlet weak var IsssLbl: UILabel!
     
-    var vc1: ViewController!
+    var vc1: SearchRepositoryViewController!
         
     override func viewDidLoad() {
         super.viewDidLoad()
