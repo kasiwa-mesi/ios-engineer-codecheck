@@ -44,14 +44,12 @@ class SearchRepositoryViewController: UIViewController {
 
 private extension SearchRepositoryViewController {
     func searchRepository(word: String) {
-        print(word)
         if word.count != 0 {
             url = "https://api.github.com/search/repositories?q=\(word)"
             task = URLSession.shared.dataTask(with: URL(string: url)!) { (data, res, err) in
                 if let obj = try! JSONSerialization.jsonObject(with: data!) as? [String: Any] {
                     if let items = obj["items"] as? [[String: Any]] {
                         self.repo = items
-                        print(self.repo)
                         DispatchQueue.main.async {
                             self.tableView.reloadData()
                         }
@@ -99,9 +97,7 @@ extension SearchRepositoryViewController: UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        print("検索する")
         word = searchBar.text!
-        print(word)
         searchRepository(word: word)
     }
 }
