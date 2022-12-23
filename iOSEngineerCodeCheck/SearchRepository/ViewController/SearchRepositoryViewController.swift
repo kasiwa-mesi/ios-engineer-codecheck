@@ -12,11 +12,11 @@ final class SearchRepositoryViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     
-    private var repositories: [[String: Any]]=[]
+    var repositories: [[String: Any]]=[]
     private var task: URLSessionTask?
     private var word: String = ""
     private var url: String = ""
-    private var index: Int = 0
+    var index: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,7 +91,7 @@ extension SearchRepositoryViewController: UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        word = searchBar.text
+        word = searchBar.text ?? ""
         searchRepository(word: word)
     }
 }
