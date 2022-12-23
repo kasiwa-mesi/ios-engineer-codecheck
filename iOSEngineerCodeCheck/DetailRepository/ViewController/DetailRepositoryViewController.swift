@@ -25,7 +25,7 @@ class DetailRepositoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let repository = vc.repo[vc.idx]
+        let repository = vc.repositories[vc.index]
         
         LanguageLabel.text = "Written in \(repository["language"] as? String ?? "")"
         StarsCountLabel.text = "\(repository["stargazers_count"] as? Int ?? 0) stars"
@@ -38,7 +38,7 @@ class DetailRepositoryViewController: UIViewController {
     
     func getImage(){
         
-        let repository = vc.repo[vc.idx]
+        let repository = vc.repositories[vc.index]
         
         TitleLabel.text = repository["full_name"] as? String
         
