@@ -19,9 +19,7 @@ class DetailRepositoryViewController: UIViewController {
     @IBOutlet private weak var WatchersCountLabel: UILabel!
     @IBOutlet private weak var ForksCountLabel: UILabel!
     @IBOutlet private weak var OpenIssuesCountLabel: UILabel!
-    
-    var vc: SearchRepositoryViewController!
-    
+        
     private var viewModel: DetailRepositoryViewModel!
     
     override func viewDidLoad() {
@@ -32,6 +30,7 @@ class DetailRepositoryViewController: UIViewController {
         WatchersCountLabel.text = "\(viewModel.repository.watchersCount) watchers"
         ForksCountLabel.text = "\(viewModel.repository.forksCount) forks"
         OpenIssuesCountLabel.text = "\(viewModel.repository.openIssuesCount) open issues"
+        TitleLabel.text = viewModel.repository.fullName
         getImage()
         
     }
@@ -49,8 +48,6 @@ class DetailRepositoryViewController: UIViewController {
     }
     
     func getImage(){
-        TitleLabel.text = viewModel.repository.fullName
-        
         if let owner = viewModel.repository.owner as? OwnerModel {
             if let imageURL = owner.imageURL as? String {
                 URLSession.shared.dataTask(with: URL(string: imageURL)!) { (data, res, err) in

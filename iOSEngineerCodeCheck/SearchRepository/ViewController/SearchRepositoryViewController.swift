@@ -12,18 +12,12 @@ import RxSwift
 import UIKit
 
 final class SearchRepositoryViewController: UIViewController {
-    @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var tableView: UITableView! {
+    @IBOutlet private weak var searchBar: UISearchBar!
+    @IBOutlet private weak var tableView: UITableView! {
         didSet {
             tableView.register(TableViewCell.nib, forCellReuseIdentifier: TableViewCell.reuseIdentifier)
         }
     }
-    
-    var repositories: [RepositoryModel] = []
-    //    private var task: URLSessionTask?
-    //    private var word: String = ""
-    //    private var url: String = ""
-    var index: Int = 0
     
     private let didSelectRelay: PublishRelay<Int> = .init()
     
@@ -43,13 +37,6 @@ final class SearchRepositoryViewController: UIViewController {
             fatalError()
         }
         return vc
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "Detail"{
-            let vc = segue.destination as! DetailRepositoryViewController
-            //dtl.vc1 = self
-        }
     }
 }
 
