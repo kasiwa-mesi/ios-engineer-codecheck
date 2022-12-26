@@ -19,6 +19,11 @@ final class Router {
         self.pushNavigate(vc: vc, window: window)
     }
     
+    func showDetailRepository(from: UIViewController, repository: RepositoryModel) {
+        let vc = DetailRepositoryViewController.makeFromStoryboard(repository: repository)
+        show(from: from, next: vc)
+    }
+    
     //    func showOffline(window: UIWindow?) {
     //        let vc = OfflineViewController.makeFromStoryboard()
     //        self.pushNavigate(vc: vc, window: window)

@@ -67,8 +67,9 @@ private extension SearchRepositoryViewController {
             }).disposed(by: rx.disposeBag)
         
         viewModel.selectRepositoryModelObservable
-            .bind(to: Binder(self) { vc, memo in
+            .bind(to: Binder(self) { vc, repository in
                 print("Cellをクリック")
+                Router.shared.showDetailRepository(from: vc, repository: repository)
             }).disposed(by: rx.disposeBag)
     }
 }
