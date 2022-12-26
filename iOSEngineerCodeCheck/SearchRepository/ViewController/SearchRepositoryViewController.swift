@@ -13,12 +13,16 @@ import UIKit
 
 final class SearchRepositoryViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView! {
+        didSet {
+            tableView.register(TableViewCell.nib, forCellReuseIdentifier: TableViewCell.reuseIdentifier)
+        }
+    }
     
     var repositories: [RepositoryModel] = []
-    private var task: URLSessionTask?
-    private var word: String = ""
-    private var url: String = ""
+    //    private var task: URLSessionTask?
+    //    private var word: String = ""
+    //    private var url: String = ""
     var index: Int = 0
     
     private let didSelectRelay: PublishRelay<Int> = .init()
@@ -77,24 +81,23 @@ extension SearchRepositoryViewController: SearchRepositoryViewModelInput {
 
 extension SearchRepositoryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        index = indexPath.row
-        performSegue(withIdentifier: "Detail", sender: self)
+        didSelectRelay.accept(indexPath.item)
     }
 }
 
 extension SearchRepositoryViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return repositories.count
+        return viewModel.repositories.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("Cell更新")
-        let cell = UITableViewCell()
-        let repository = repositories[indexPath.row]
-        print("Repository: \(repository)")
-        cell.textLabel?.text = repository.fullName
-        cell.detailTextLabel?.text = repository.language
-        cell.tag = indexPath.row
+        print("TableViewCell: \(TableViewCell.reuseIdentifier)")
+        print("TableViewCell: \(TableViewCell.nib)")
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.reuseIdentifier, for: indexPath) as? TableViewCell else {
+            return UITableViewCell()
+        }
+        let repository = viewModel.repositories[indexPath.item]
+        cell.configure(repository: repository)
         return cell
     }
 }
@@ -106,11 +109,11 @@ extension SearchRepositoryViewController: UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        task?.cancel()
+        viewModel.task?.cancel()
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        word = searchBar.text ?? ""
-        viewModel.fetchRepositories(word: word)
+        viewModel.word = searchBar.text ?? ""
+        viewModel.fetchRepositories(word: viewModel.word)
     }
 }

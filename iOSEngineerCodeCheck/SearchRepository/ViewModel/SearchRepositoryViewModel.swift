@@ -45,6 +45,9 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelOutput, HasDispo
         get {
             return _word
         }
+        set(value) {
+            _word = value
+        }
     }
 
     private var _url: String = ""
@@ -60,9 +63,17 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelOutput, HasDispo
             return _index
         }
     }
+    
+    private var _task: URLSessionTask?
+    var task: URLSessionTask? {
+        get {
+            return _task
+        }
+    }
 
     private var input: SearchRepositoryViewModelInput!
     init(input: SearchRepositoryViewModelInput) {
+        self._task = nil
         self.input = input
         
         input.didSelectObservable
