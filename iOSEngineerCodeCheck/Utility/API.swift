@@ -17,22 +17,21 @@ final class API {
         if word.count != 0 {
             let url = "https://api.github.com/search/repositories?q=\(word)"
             print(url)
-            let task = URLSession.shared.dataTask(with: URL(string: url)!) { (data, res, err) in
+            URLSession.shared.dataTask(with: URL(string: url)!) { (data, res, err) in
+                if let databaseError = err as NSError? {
+                    completion(nil, databaseError)
+                    return
+                }
+                
                 if let data = data {
                     print("Data: \(data)")
-                    do {
-                        let githubResponse = try JSONDecoder().decode(GithubResponse.self, from: data)
-                        let models = githubResponse.items
-                        print("GithubResponse: \(githubResponse)")
-                        print("Models: \(models)")
-                        completion(models, nil)
-                    } catch let error {
-                        print(error)
-                        completion(nil, nil)
-                    }
+                    let githubResponse = try? JSONDecoder().decode(GithubResponse.self, from: data)
+                    let models = githubResponse?.items
+                    print("GithubResponse: \(githubResponse)")
+                    print("Models: \(models)")
+                    completion(models, nil)
                 }
-            }
-            task.resume()
+            }.resume()
         }
     }
     

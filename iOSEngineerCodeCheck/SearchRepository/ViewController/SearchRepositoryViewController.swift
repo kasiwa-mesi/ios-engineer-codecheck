@@ -26,9 +26,8 @@ final class SearchRepositoryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchBar.text = "GitHubのリポジトリを検索できるよー"
+        searchBar.text = String.searchBarText
         searchBar.delegate = self
-        print("起動")
         
         setupViewModel()
     }
@@ -47,7 +46,6 @@ private extension SearchRepositoryViewController {
         
         viewModel.updateRepositoryModelsObservable
             .bind(to: Binder(self) { vc, _ in
-                print("メモを更新")
                 vc.indicator.isHidden = true
                 vc.tableView.isHidden = false
                 vc.tableView.dataSource = self
@@ -57,13 +55,11 @@ private extension SearchRepositoryViewController {
         
         viewModel.selectRepositoryModelObservable
             .bind(to: Binder(self) { vc, repository in
-                print("Cellをクリック")
                 Router.shared.showDetailRepository(from: vc, repository: repository)
             }).disposed(by: rx.disposeBag)
         
         viewModel.loadingObservable
             .bind(to: Binder(self) { vc, loading in
-                print("ローディング: \(loading)")
                 vc.tableView.isHidden = loading
                 vc.indicator.isHidden = !loading
                 vc.indicator.startAnimating()
@@ -74,6 +70,11 @@ private extension SearchRepositoryViewController {
 extension SearchRepositoryViewController: SearchRepositoryViewModelInput {
     var didSelectObservable: Observable<Int> {
         didSelectRelay.asObservable()
+    }
+    
+    func show(validationMessage: String) {
+        let gotItAction = UIAlertAction(title: String.ok, style: .default)
+        self.showAlert(title: validationMessage, message: "", actions: [gotItAction])
     }
 }
 
@@ -89,8 +90,6 @@ extension SearchRepositoryViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("TableViewCell: \(TableViewCell.reuseIdentifier)")
-        print("TableViewCell: \(TableViewCell.nib)")
         guard let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.reuseIdentifier, for: indexPath) as? TableViewCell else {
             return UITableViewCell()
         }
