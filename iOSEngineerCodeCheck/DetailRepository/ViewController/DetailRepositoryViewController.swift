@@ -7,51 +7,50 @@
 //
 
 import UIKit
+import RxSwift
 
 class DetailRepositoryViewController: UIViewController {
-    @IBOutlet weak var ImageView: UIImageView!
-    
-    @IBOutlet weak var TitleLabel: UILabel!
-    
-    @IBOutlet weak var LanguageLabel: UILabel!
+    @IBOutlet private weak var ImageView: UIImageView!
 
-    @IBOutlet weak var StarsCountLabel: UILabel!
-    @IBOutlet weak var WatchersCountLabel: UILabel!
-    @IBOutlet weak var ForksCountLabel: UILabel!
-    @IBOutlet weak var OpenIssuesCountLabel: UILabel!
+    @IBOutlet private weak var TitleLabel: UILabel!
     
-    var vc: SearchRepositoryViewController!
+    @IBOutlet private weak var LanguageLabel: UILabel!
+
+    @IBOutlet private weak var StarsCountLabel: UILabel!
+    @IBOutlet private weak var WatchersCountLabel: UILabel!
+    @IBOutlet private weak var ForksCountLabel: UILabel!
+    @IBOutlet private weak var OpenIssuesCountLabel: UILabel!
+        
+    private var viewModel: DetailRepositoryViewModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let repository = vc.repositories[vc.index]
-        
-        LanguageLabel.text = "Written in \(repository["language"] as? String ?? "")"
-        StarsCountLabel.text = "\(repository["stargazers_count"] as? Int ?? 0) stars"
-        WatchersCountLabel.text = "\(repository["wachers_count"] as? Int ?? 0) watchers"
-        ForksCountLabel.text = "\(repository["forks_count"] as? Int ?? 0) forks"
-        OpenIssuesCountLabel.text = "\(repository["open_issues_count"] as? Int ?? 0) open issues"
-        getImage()
+        LanguageLabel.text = "Written in \(viewModel.repository.language ?? "")"
+        StarsCountLabel.text = "\(viewModel.repository.starsCount) stars"
+        WatchersCountLabel.text = "\(viewModel.repository.watchersCount) watchers"
+        ForksCountLabel.text = "\(viewModel.repository.forksCount) forks"
+        OpenIssuesCountLabel.text = "\(viewModel.repository.openIssuesCount) open issues"
+        TitleLabel.text = viewModel.repository.fullName
+        viewModel.getImage()
         
     }
     
-    func getImage(){
-        
-        let repository = vc.repositories[vc.index]
-        
-        TitleLabel.text = repository["full_name"] as? String
-        
-        if let owner = repository["owner"] as? [String: Any] {
-            if let imageURL = owner["avatar_url"] as? String {
-                URLSession.shared.dataTask(with: URL(string: imageURL)!) { (data, res, err) in
-                    let image = UIImage(data: data!)!
-                    DispatchQueue.main.async {
-                        self.ImageView.image = image
-                    }
-                }.resume()
-            }
+    static func makeFromStoryboard(repository: RepositoryModel) -> DetailRepositoryViewController {
+        guard let vc = UIStoryboard.init(name: "DetailRepository", bundle: nil).instantiateInitialViewController() as? DetailRepositoryViewController else {
+            fatalError()
         }
+        vc.setupViewModel(repository: repository)
+        return vc
+    }
+    
+    func setupViewModel(repository: RepositoryModel) {
+        viewModel = DetailRepositoryViewModel(repository: repository)
         
+        viewModel.updateImageDataObservable
+            .bind(to: Binder(self) { vc, data in
+                let image = UIImage(data: data)
+                self.ImageView.image = image
+            }).disposed(by: rx.disposeBag)
     }
 }

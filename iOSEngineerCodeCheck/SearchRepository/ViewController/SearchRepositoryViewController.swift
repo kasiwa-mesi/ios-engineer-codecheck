@@ -6,22 +6,31 @@
 //  Copyright © 2022 YUMEMI Inc. All rights reserved.
 //
 
+import RxCocoa
+import RxOptional
+import RxSwift
 import UIKit
 
 final class SearchRepositoryViewController: UIViewController {
-    @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var searchBar: UISearchBar!
+    @IBOutlet private weak var indicator: UIActivityIndicatorView!
+    @IBOutlet private weak var tableView: UITableView! {
+        didSet {
+            tableView.register(TableViewCell.nib, forCellReuseIdentifier: TableViewCell.reuseIdentifier)
+        }
+    }
     
-    var repositories: [[String: Any]]=[]
-    private var task: URLSessionTask?
-    private var word: String = ""
-    private var url: String = ""
-    var index: Int = 0
+    private let didSelectRelay: PublishRelay<Int> = .init()
+    
+    private var viewModel: SearchRepositoryViewModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.text = "GitHubのリポジトリを検索できるよー"
         searchBar.delegate = self
+        print("起動")
+        
+        setupViewModel()
     }
     
     static func makeFromStoryboard() -> SearchRepositoryViewController {
@@ -30,52 +39,63 @@ final class SearchRepositoryViewController: UIViewController {
         }
         return vc
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "Detail"{
-            let vc = segue.destination as! DetailRepositoryViewController
-            //dtl.vc1 = self
-        }
-    }
 }
 
 private extension SearchRepositoryViewController {
-    func searchRepository(word: String) {
-        if word.count != 0 {
-            url = "https://api.github.com/search/repositories?q=\(word)"
-            task = URLSession.shared.dataTask(with: URL(string: url)!) { (data, res, err) in
-                if let object = try! JSONSerialization.jsonObject(with: data!) as? [String: Any] {
-                    if let items = object["items"] as? [[String: Any]] {
-                        self.repositories = items
-                        DispatchQueue.main.async {
-                            self.tableView.reloadData()
-                        }
-                    }
-                }
-            }
-            task?.resume()
-        }
+    func setupViewModel() {
+        viewModel = SearchRepositoryViewModel(input: self)
+        
+        viewModel.updateRepositoryModelsObservable
+            .bind(to: Binder(self) { vc, _ in
+                print("メモを更新")
+                vc.indicator.isHidden = true
+                vc.tableView.isHidden = false
+                vc.tableView.dataSource = self
+                vc.tableView.delegate = self
+                vc.tableView.reloadData()
+            }).disposed(by: rx.disposeBag)
+        
+        viewModel.selectRepositoryModelObservable
+            .bind(to: Binder(self) { vc, repository in
+                print("Cellをクリック")
+                Router.shared.showDetailRepository(from: vc, repository: repository)
+            }).disposed(by: rx.disposeBag)
+        
+        viewModel.loadingObservable
+            .bind(to: Binder(self) { vc, loading in
+                print("ローディング: \(loading)")
+                vc.tableView.isHidden = loading
+                vc.indicator.isHidden = !loading
+                vc.indicator.startAnimating()
+            }).disposed(by: rx.disposeBag)
+    }
+}
+
+extension SearchRepositoryViewController: SearchRepositoryViewModelInput {
+    var didSelectObservable: Observable<Int> {
+        didSelectRelay.asObservable()
     }
 }
 
 extension SearchRepositoryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        index = indexPath.row
-        performSegue(withIdentifier: "Detail", sender: self)
+        didSelectRelay.accept(indexPath.item)
     }
 }
 
 extension SearchRepositoryViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return repositories.count
+        return viewModel.repositories.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        let repository = repositories[indexPath.row]
-        cell.textLabel?.text = repository["full_name"] as? String ?? ""
-        cell.detailTextLabel?.text = repository["language"] as? String ?? ""
-        cell.tag = indexPath.row
+        print("TableViewCell: \(TableViewCell.reuseIdentifier)")
+        print("TableViewCell: \(TableViewCell.nib)")
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.reuseIdentifier, for: indexPath) as? TableViewCell else {
+            return UITableViewCell()
+        }
+        let repository = viewModel.repositories[indexPath.item]
+        cell.configure(repository: repository)
         return cell
     }
 }
@@ -87,11 +107,11 @@ extension SearchRepositoryViewController: UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        task?.cancel()
+        viewModel.task?.cancel()
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        word = searchBar.text ?? ""
-        searchRepository(word: word)
+        viewModel.word = searchBar.text ?? ""
+        viewModel.fetchRepositories(word: viewModel.word)
     }
 }
