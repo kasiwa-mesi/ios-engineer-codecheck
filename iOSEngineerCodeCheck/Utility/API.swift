@@ -13,36 +13,28 @@ final class API {
     private init() {}
     
     func fetchRepositories(word: String, completion: @escaping ([RepositoryModel]?, NSError?) -> Void) {
-        print(word)
-        if word.count != 0 {
-            let url = "https://api.github.com/search/repositories?q=\(word)"
-            print(url)
-            URLSession.shared.dataTask(with: URL(string: url)!) { (data, res, err) in
-                if let databaseError = err as NSError? {
-                    completion(nil, databaseError)
-                    return
-                }
-                
-                if let data = data {
-                    print("Data: \(data)")
-                    let githubResponse = try? JSONDecoder().decode(GithubResponse.self, from: data)
-                    let models = githubResponse?.items
-                    print("GithubResponse: \(githubResponse)")
-                    print("Models: \(models)")
-                    completion(models, nil)
-                }
-            }.resume()
-        }
+        let url = "https://api.github.com/search/repositories?q=\(word)"
+        URLSession.shared.dataTask(with: URL(string: url)!) { (data, res, err) in
+            if let responseError = err as NSError? {
+                completion(nil, responseError)
+                return
+            }
+            
+            let fixedData = data ?? Data()
+            do {
+                let githubResponse = try JSONDecoder().decode(GithubResponse.self, from: fixedData)
+                let models = githubResponse.items
+                completion(models, nil)
+            } catch let parseError as NSError? {
+                completion(nil, parseError)
+            }
+        }.resume()
     }
     
     func getImage(repository: RepositoryModel, completion: @escaping (Data, NSError?) -> Void) {
-        if let owner = repository.owner as? OwnerModel {
-            if let imageURL = owner.imageURL as? String {
-                URLSession.shared.dataTask(with: URL(string: imageURL)!) { (data, res, err) in
-                    let error = err as? NSError
-                    completion(data ?? Data(), error)
-                }.resume()
-            }
-        }
+        URLSession.shared.dataTask(with: URL(string: repository.owner.imageURL)!) { (data, res, err) in
+            let error = err as? NSError
+            completion(data ?? Data(), error)
+        }.resume()
     }
 }
