@@ -16,6 +16,7 @@
 		27288F0D2956BECD002664E7 /* RepositoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27288F0C2956BECD002664E7 /* RepositoryModel.swift */; };
 		2748B74C29596316008F9469 /* UITableViewCell+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2748B74B29596316008F9469 /* UITableViewCell+.swift */; };
 		2748B74E295973B8008F9469 /* DetailRepositoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2748B74D295973B8008F9469 /* DetailRepositoryViewModel.swift */; };
+		2748B751295981B2008F9469 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2748B750295981B2008F9469 /* API.swift */; };
 		27543C29295853850044DBE4 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27543C28295853850044DBE4 /* TableViewCell.swift */; };
 		27543C2D295853C40044DBE4 /* TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27543C2C295853C40044DBE4 /* TableViewCell.xib */; };
 		275B0C42295438F000AE9CBF /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275B0C41295438F000AE9CBF /* Router.swift */; };
@@ -54,6 +55,7 @@
 		27288F0C2956BECD002664E7 /* RepositoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryModel.swift; sourceTree = "<group>"; };
 		2748B74B29596316008F9469 /* UITableViewCell+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+.swift"; sourceTree = "<group>"; };
 		2748B74D295973B8008F9469 /* DetailRepositoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRepositoryViewModel.swift; sourceTree = "<group>"; };
+		2748B750295981B2008F9469 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		27543C28295853850044DBE4 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		27543C2C295853C40044DBE4 /* TableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewCell.xib; sourceTree = "<group>"; };
 		275B0C41295438F000AE9CBF /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
@@ -205,6 +207,14 @@
 			path = Extension;
 			sourceTree = "<group>";
 		};
+		2748B74F29598178008F9469 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				2748B750295981B2008F9469 /* API.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
 		275B0C40295438E000AE9CBF /* Router */ = {
 			isa = PBXGroup;
 			children = (
@@ -248,6 +258,7 @@
 		BFD945DD244DC5E80012785A /* iOSEngineerCodeCheck */ = {
 			isa = PBXGroup;
 			children = (
+				2748B74F29598178008F9469 /* Utility */,
 				2748B74A295962F8008F9469 /* Extension */,
 				2728298D295852CA001F0DA8 /* View */,
 				27288F092956AB19002664E7 /* Model */,
@@ -525,6 +536,7 @@
 				2724B34F2955983800EFC725 /* SearchRepositoryViewModel.swift in Sources */,
 				2723B8F329542B49009D6258 /* SearchRepositoryViewController.swift in Sources */,
 				2723B8F529542B6F009D6258 /* DetailRepositoryViewController.swift in Sources */,
+				2748B751295981B2008F9469 /* API.swift in Sources */,
 				275B0C42295438F000AE9CBF /* Router.swift in Sources */,
 				BFD945DF244DC5E80012785A /* AppDelegate.swift in Sources */,
 				2748B74C29596316008F9469 /* UITableViewCell+.swift in Sources */,

@@ -83,20 +83,9 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelOutput, HasDispo
     }
     
     func fetchRepositories(word: String) {
-        if word.count != 0 {
-            let url = "https://api.github.com/search/repositories?q=\(word)"
-            let task = URLSession.shared.dataTask(with: URL(string: url)!) { (data, res, err) in
-                if let data = data {
-                    print("Data: \(data)")
-                    let githubResponse = try? JSONDecoder().decode(GithubResponse.self, from: data)
-                    print("GithubResponse: \(githubResponse)")
-                    let models = githubResponse?.items
-                    print("Models: \(models)")
-                    self._repositories = models ?? []
-                    self._updateRepositoryModels.accept(self.repositories)
-                }
-            }
-            task.resume()
+        API.shared.fetchRepositories(word: word) { repositories, error in
+            self._repositories = repositories
+            self._updateRepositoryModels.accept(self.repositories)
         }
     }
 }

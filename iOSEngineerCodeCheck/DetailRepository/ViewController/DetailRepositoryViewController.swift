@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RxSwift
 
 class DetailRepositoryViewController: UIViewController {
     @IBOutlet private weak var ImageView: UIImageView!
@@ -31,7 +32,7 @@ class DetailRepositoryViewController: UIViewController {
         ForksCountLabel.text = "\(viewModel.repository.forksCount) forks"
         OpenIssuesCountLabel.text = "\(viewModel.repository.openIssuesCount) open issues"
         TitleLabel.text = viewModel.repository.fullName
-        getImage()
+        viewModel.getImage()
         
     }
     
@@ -45,19 +46,11 @@ class DetailRepositoryViewController: UIViewController {
     
     func setupViewModel(repository: RepositoryModel) {
         viewModel = DetailRepositoryViewModel(repository: repository)
-    }
-    
-    func getImage(){
-        if let owner = viewModel.repository.owner as? OwnerModel {
-            if let imageURL = owner.imageURL as? String {
-                URLSession.shared.dataTask(with: URL(string: imageURL)!) { (data, res, err) in
-                    let image = UIImage(data: data!)!
-                    DispatchQueue.main.async {
-                        self.ImageView.image = image
-                    }
-                }.resume()
-            }
-        }
         
+        viewModel.updateImageDataObservable
+            .bind(to: Binder(self) { vc, data in
+                let image = UIImage(data: data)
+                self.ImageView.image = image
+            }).disposed(by: rx.disposeBag)
     }
 }

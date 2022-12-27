@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import RxSwift
+import RxRelay
 
 protocol DetailRepositoryViewModelOutput {
     var repository: RepositoryModel { get }
+    var updateImageDataObservable: Observable<Data> { get }
 }
 
 final class DetailRepositoryViewModel: DetailRepositoryViewModelOutput {
@@ -20,7 +23,16 @@ final class DetailRepositoryViewModel: DetailRepositoryViewModelOutput {
         }
     }
     
+    private let _updateImageData: PublishRelay<Data> = .init()
+    lazy var updateImageDataObservable: Observable<Data> = _updateImageData.asObservable()
+    
     init(repository: RepositoryModel) {
         self._repository = repository
+    }
+    
+    func getImage(){
+        API.shared.getImage(repository: repository) { data, error in
+            self._updateImageData.accept(data)
+        }
     }
 }
