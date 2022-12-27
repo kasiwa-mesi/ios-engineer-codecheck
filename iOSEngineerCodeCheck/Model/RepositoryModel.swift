@@ -17,7 +17,7 @@ struct RepositoryModel: Codable {
     let name: String
     let fullName: String
     var urlStr: String { "https://github.com/\(fullName)" }
-    let language: String
+    let language: String?
     let starsCount: Int
     let watchersCount: Int
     let forksCount: Int

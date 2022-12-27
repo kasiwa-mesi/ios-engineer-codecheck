@@ -25,8 +25,8 @@ class DetailRepositoryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
-        LanguageLabel.text = "Written in \(viewModel.repository.language)"
+        
+        LanguageLabel.text = "Written in \(viewModel.repository.language ?? "")"
         StarsCountLabel.text = "\(viewModel.repository.starsCount) stars"
         WatchersCountLabel.text = "\(viewModel.repository.watchersCount) watchers"
         ForksCountLabel.text = "\(viewModel.repository.forksCount) forks"
