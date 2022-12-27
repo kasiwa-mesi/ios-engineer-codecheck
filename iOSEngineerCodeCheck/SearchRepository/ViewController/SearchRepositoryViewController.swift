@@ -13,6 +13,7 @@ import UIKit
 
 final class SearchRepositoryViewController: UIViewController {
     @IBOutlet private weak var searchBar: UISearchBar!
+    @IBOutlet private weak var indicator: UIActivityIndicatorView!
     @IBOutlet private weak var tableView: UITableView! {
         didSet {
             tableView.register(TableViewCell.nib, forCellReuseIdentifier: TableViewCell.reuseIdentifier)
@@ -47,6 +48,7 @@ private extension SearchRepositoryViewController {
         viewModel.updateRepositoryModelsObservable
             .bind(to: Binder(self) { vc, _ in
                 print("メモを更新")
+                vc.indicator.isHidden = true
                 vc.tableView.isHidden = false
                 vc.tableView.dataSource = self
                 vc.tableView.delegate = self
@@ -57,6 +59,14 @@ private extension SearchRepositoryViewController {
             .bind(to: Binder(self) { vc, repository in
                 print("Cellをクリック")
                 Router.shared.showDetailRepository(from: vc, repository: repository)
+            }).disposed(by: rx.disposeBag)
+        
+        viewModel.loadingObservable
+            .bind(to: Binder(self) { vc, loading in
+                print("ローディング: \(loading)")
+                vc.tableView.isHidden = loading
+                vc.indicator.isHidden = !loading
+                vc.indicator.startAnimating()
             }).disposed(by: rx.disposeBag)
     }
 }

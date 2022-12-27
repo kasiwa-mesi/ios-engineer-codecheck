@@ -83,6 +83,7 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelOutput, HasDispo
     }
     
     func fetchRepositories(word: String) {
+        self._loading.accept(true)
         API.shared.fetchRepositories(word: word) { repositories, error in
             self._repositories = repositories ?? []
             self._updateRepositoryModels.accept(self.repositories)
