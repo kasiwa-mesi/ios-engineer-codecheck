@@ -9,7 +9,7 @@
 import UIKit
 import RxSwift
 
-class DetailRepositoryViewController: UIViewController {
+final class DetailRepositoryViewController: UIViewController {
     @IBOutlet private weak var ImageView: UIImageView!
 
     @IBOutlet private weak var TitleLabel: UILabel!
