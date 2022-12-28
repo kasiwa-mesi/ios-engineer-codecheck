@@ -24,10 +24,10 @@ final class Router {
         show(from: from, next: vc)
     }
     
-        func showOffline(window: UIWindow?) {
-            let vc = OfflineViewController.makeFromStoryboard()
-            self.pushNavigate(vc: vc, window: window)
-        }
+    func showOffline(window: UIWindow?) {
+        let vc = OfflineViewController.makeFromStoryboard()
+        self.pushNavigate(vc: vc, window: window)
+    }
 }
 
 private extension Router {
