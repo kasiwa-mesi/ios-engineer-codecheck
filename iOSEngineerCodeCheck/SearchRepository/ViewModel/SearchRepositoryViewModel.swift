@@ -14,6 +14,7 @@ import NSObject_Rx
 protocol SearchRepositoryViewModelInput {
     var didSelectObservable: Observable<Int> { get }
     func show(validationMessage: String)
+    func showErrorAlert(code: String, message: String)
 }
 
 protocol SearchRepositoryViewModelOutput {
@@ -90,7 +91,16 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelOutput, HasDispo
         }
         
         self._loading.accept(true)
-        API.shared.fetchRepositories(word: word) { repositories, error in
+        API.shared.fetchRepositories(word: word) { repositories, error, res in
+            if let error {
+                self.input.showErrorAlert(code: error.code.description, message: error.localizedDescription)
+                return
+            }
+            
+            if let res {
+                self.input.showErrorAlert(code: res.status.description, message: res.message)
+            }
+            
             self._repositories = repositories ?? []
             self._updateRepositoryModels.accept(self.repositories)
         }

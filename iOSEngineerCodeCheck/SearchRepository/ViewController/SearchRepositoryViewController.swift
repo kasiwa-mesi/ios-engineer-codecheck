@@ -76,6 +76,13 @@ extension SearchRepositoryViewController: SearchRepositoryViewModelInput {
         let gotItAction = UIAlertAction(title: String.ok, style: .default)
         self.showAlert(title: validationMessage, message: "", actions: [gotItAction])
     }
+    
+    func showErrorAlert(code: String, message: String) {
+        let gotItAction = UIAlertAction(title: String.ok, style: .default)
+        DispatchQueue.main.async {
+            self.showAlert(title: String.errorTitle + code, message: message, actions: [gotItAction])
+        }
+    }
 }
 
 extension SearchRepositoryViewController: UITableViewDelegate {

@@ -12,11 +12,20 @@ final class API {
     static let shared = API()
     private init() {}
     
-    func fetchRepositories(word: String, completion: @escaping ([RepositoryModel]?, NSError?) -> Void) {
+    func fetchRepositories(word: String, completion: @escaping ([RepositoryModel]?, NSError?, (message: String, status: Int)?) -> Void) {
         let url = "https://api.github.com/search/repositories?q=\(word)"
+        
         URLSession.shared.dataTask(with: URL(string: url)!) { (data, res, err) in
             if let responseError = err as NSError? {
-                completion(nil, responseError)
+                completion(nil, responseError, nil)
+                return
+            }
+            
+            let response = res as? HTTPURLResponse
+            let status = response?.statusCode ?? 0
+            let message = HTTPURLResponse.localizedString(forStatusCode: status)
+            guard status >= 200 && status <= 299 else {
+                completion(nil, nil, (message, status))
                 return
             }
             
@@ -24,9 +33,9 @@ final class API {
             do {
                 let githubResponse = try JSONDecoder().decode(GithubResponse.self, from: fixedData)
                 let models = githubResponse.items
-                completion(models, nil)
+                completion(models, nil, nil)
             } catch let parseError as NSError? {
-                completion(nil, parseError)
+                completion(nil, parseError, nil)
             }
         }.resume()
     }
