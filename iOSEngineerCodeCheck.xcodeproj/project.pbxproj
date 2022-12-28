@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		077C28F05FA5C7E1C7F05E83 /* Pods_iOSEngineerCodeCheckTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A79D23E4A2545F22DAF67EE6 /* Pods_iOSEngineerCodeCheckTests.framework */; };
+		2720F163295C179A00C6ACEA /* ExampleJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2720F162295C179A00C6ACEA /* ExampleJSON.swift */; };
+		2720F165295C1AE000C6ACEA /* RepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2720F164295C1AE000C6ACEA /* RepositoryTests.swift */; };
 		2722B4A7295B4BEA0019329A /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2722B4A6295B4BEA0019329A /* Validator.swift */; };
 		2722B4A9295B52E90019329A /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2722B4A8295B52E90019329A /* UIViewController+.swift */; };
 		2722B4AB295B53BE0019329A /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2722B4AA295B53BE0019329A /* String+.swift */; };
@@ -50,6 +52,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2720F162295C179A00C6ACEA /* ExampleJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleJSON.swift; sourceTree = "<group>"; };
+		2720F164295C1AE000C6ACEA /* RepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryTests.swift; sourceTree = "<group>"; };
 		2722B4A6295B4BEA0019329A /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
 		2722B4A8295B52E90019329A /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		2722B4AA295B53BE0019329A /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
@@ -287,6 +291,8 @@
 			children = (
 				BFD945F5244DC5EB0012785A /* iOSEngineerCodeCheckTests.swift */,
 				BFD945F7244DC5EB0012785A /* Info.plist */,
+				2720F162295C179A00C6ACEA /* ExampleJSON.swift */,
+				2720F164295C1AE000C6ACEA /* RepositoryTests.swift */,
 			);
 			path = iOSEngineerCodeCheckTests;
 			sourceTree = "<group>";
@@ -561,7 +567,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2720F163295C179A00C6ACEA /* ExampleJSON.swift in Sources */,
 				BFD945F6244DC5EB0012785A /* iOSEngineerCodeCheckTests.swift in Sources */,
+				2720F165295C1AE000C6ACEA /* RepositoryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

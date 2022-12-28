@@ -20,6 +20,12 @@ class iOSEngineerCodeCheckTests: XCTestCase {
     }
 
     func testExample() throws {
+        let test = RepositoryTests()
+        do {
+            try test.testDecode()
+        } catch let error {
+            print("Error: \(error)")
+        }
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
