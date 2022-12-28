@@ -23,6 +23,7 @@ extension RepositoryModel {
       "watchers_count": 61449,
       "forks_count": 9888,
       "open_issues_count": 6313,
+      "language": "C++"
     }
     """
     }
