@@ -37,7 +37,7 @@ final class DetailRepositoryViewModel: DetailRepositoryViewModelOutput {
         self.input = input
     }
     
-    func getImage(){
+    func getImage() {
         API.shared.getImage(repository: repository) { [weak self] data, error, res in
             if let error {
                 self?.input.showErrorAlert(code: error.code.description, message: error.localizedDescription)

@@ -46,7 +46,7 @@ final class API {
                 completion(nil, error, nil)
                 return
             }
-
+            
             let response = res as? HTTPURLResponse
             let status = response?.statusCode ?? 0
             let message = HTTPURLResponse.localizedString(forStatusCode: status)

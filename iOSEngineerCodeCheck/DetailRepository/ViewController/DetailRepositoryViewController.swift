@@ -9,18 +9,18 @@
 import UIKit
 import RxSwift
 
-class DetailRepositoryViewController: UIViewController {
+final class DetailRepositoryViewController: UIViewController {
     @IBOutlet private weak var ImageView: UIImageView!
-
+    
     @IBOutlet private weak var TitleLabel: UILabel!
     
     @IBOutlet private weak var LanguageLabel: UILabel!
-
+    
     @IBOutlet private weak var StarsCountLabel: UILabel!
     @IBOutlet private weak var WatchersCountLabel: UILabel!
     @IBOutlet private weak var ForksCountLabel: UILabel!
     @IBOutlet private weak var OpenIssuesCountLabel: UILabel!
-        
+    
     private var viewModel: DetailRepositoryViewModel!
     
     override func viewDidLoad() {
