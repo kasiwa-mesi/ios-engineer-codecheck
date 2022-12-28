@@ -34,14 +34,14 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelOutput, HasDispo
     lazy var selectRepositoryModelObservable: Observable<RepositoryModel> = _selectRepositoryModel.asObservable()
     private let _updateRepositoryModels: PublishRelay<[RepositoryModel]> = .init()
     lazy var updateRepositoryModelsObservable: Observable<[RepositoryModel]> = _updateRepositoryModels.asObservable()
-
+    
     private var _repositories: [RepositoryModel] = []
     var repositories: [RepositoryModel] {
         get {
             return _repositories
         }
     }
-
+    
     private var _word: String = ""
     var word: String {
         get {
@@ -51,14 +51,14 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelOutput, HasDispo
             _word = value
         }
     }
-
+    
     private var _url: String = ""
     var url: String {
         get {
             return _url
         }
     }
-
+    
     private var _index: Int = 0
     var index: Int {
         get {
@@ -72,7 +72,7 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelOutput, HasDispo
             return _task
         }
     }
-
+    
     private var input: SearchRepositoryViewModelInput!
     init(input: SearchRepositoryViewModelInput) {
         self._task = nil
