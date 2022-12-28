@@ -44,6 +44,7 @@ final class API {
         URLSession.shared.dataTask(with: URL(string: repository.owner.imageURL)!) { (data, res, err) in
             if let error = err as NSError? {
                 completion(nil, error, nil)
+                return
             }
 
             let response = res as? HTTPURLResponse
