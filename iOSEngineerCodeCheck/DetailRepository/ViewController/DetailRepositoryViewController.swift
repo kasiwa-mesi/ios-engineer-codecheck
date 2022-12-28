@@ -26,14 +26,15 @@ final class DetailRepositoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        LanguageLabel.text = "Written in \(viewModel.repository.language ?? "")"
-        StarsCountLabel.text = "\(viewModel.repository.starsCount) stars"
-        WatchersCountLabel.text = "\(viewModel.repository.watchersCount) watchers"
-        ForksCountLabel.text = "\(viewModel.repository.forksCount) forks"
-        OpenIssuesCountLabel.text = "\(viewModel.repository.openIssuesCount) open issues"
+        LanguageLabel.text = "\(String.languageLabel) \(viewModel.repository.language ?? "")"
+        StarsCountLabel.text = "\(viewModel.repository.starsCount) \(String.starsCountLabel)"
+        WatchersCountLabel.text = "\(viewModel.repository.watchersCount) \(String.watchesCountLabel)"
+        ForksCountLabel.text = "\(viewModel.repository.forksCount) \(String.forksCountLabel)"
+        OpenIssuesCountLabel.text = "\(viewModel.repository.openIssuesCount) \(String.openIssuesCountLabel)"
         TitleLabel.text = viewModel.repository.fullName
-        viewModel.getImage()
         
+        viewModel.getImage()
+        viewModel.watchLanguageLabel()
     }
     
     static func makeFromStoryboard(repository: RepositoryModel) -> DetailRepositoryViewController {
@@ -51,6 +52,11 @@ final class DetailRepositoryViewController: UIViewController {
             .bind(to: Binder(self) { vc, data in
                 let image = UIImage(data: data)
                 self.ImageView.image = image
+            }).disposed(by: rx.disposeBag)
+        
+        viewModel.updateLanguageLabelObservable
+            .bind(to: Binder(self) { vc, languageLabel in
+                self.LanguageLabel.text = languageLabel
             }).disposed(by: rx.disposeBag)
     }
 }
