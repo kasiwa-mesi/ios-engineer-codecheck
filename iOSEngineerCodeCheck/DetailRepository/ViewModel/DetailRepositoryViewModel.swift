@@ -10,6 +10,11 @@ import UIKit
 import RxSwift
 import RxRelay
 
+protocol DetailRepositoryViewModelInput {
+    func show(validationMessage: String)
+    func showErrorAlert(code: String, message: String)
+}
+
 protocol DetailRepositoryViewModelOutput {
     var repository: RepositoryModel { get }
     var updateImageDataObservable: Observable<Data> { get }
@@ -26,13 +31,25 @@ final class DetailRepositoryViewModel: DetailRepositoryViewModelOutput {
     private let _updateImageData: PublishRelay<Data> = .init()
     lazy var updateImageDataObservable: Observable<Data> = _updateImageData.asObservable()
     
-    init(repository: RepositoryModel) {
+    private var input: DetailRepositoryViewModelInput!
+    init(repository: RepositoryModel, input: DetailRepositoryViewModelInput) {
         self._repository = repository
+        self.input = input
     }
     
     func getImage(){
-        API.shared.getImage(repository: repository) { data, error in
-            self._updateImageData.accept(data)
+        API.shared.getImage(repository: repository) { data, error, res in
+            if let error {
+                self.input.showErrorAlert(code: error.code.description, message: error.localizedDescription)
+                return
+            }
+            
+            if let res {
+                self.input.showErrorAlert(code: res.status.description, message: res.message)
+                return
+            }
+            
+            self._updateImageData.accept(data ?? Data())
         }
     }
 }

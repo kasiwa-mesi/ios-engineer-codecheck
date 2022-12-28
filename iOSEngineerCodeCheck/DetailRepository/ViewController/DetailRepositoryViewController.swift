@@ -45,12 +45,26 @@ class DetailRepositoryViewController: UIViewController {
     }
     
     func setupViewModel(repository: RepositoryModel) {
-        viewModel = DetailRepositoryViewModel(repository: repository)
+        viewModel = DetailRepositoryViewModel(repository: repository, input: self)
         
         viewModel.updateImageDataObservable
             .bind(to: Binder(self) { vc, data in
                 let image = UIImage(data: data)
                 self.ImageView.image = image
             }).disposed(by: rx.disposeBag)
+    }
+}
+
+extension DetailRepositoryViewController: DetailRepositoryViewModelInput {
+    func show(validationMessage: String) {
+        let gotItAction = UIAlertAction(title: String.ok, style: .default)
+        self.showAlert(title: validationMessage, message: "", actions: [gotItAction])
+    }
+    
+    func showErrorAlert(code: String, message: String) {
+        let gotItAction = UIAlertAction(title: String.ok, style: .default)
+        DispatchQueue.main.async {
+            self.showAlert(title: String.errorTitle + code, message: message, actions: [gotItAction])
+        }
     }
 }
