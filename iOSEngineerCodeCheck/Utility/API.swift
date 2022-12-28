@@ -40,10 +40,21 @@ final class API {
         }.resume()
     }
     
-    func getImage(repository: RepositoryModel, completion: @escaping (Data, NSError?) -> Void) {
+    func getImage(repository: RepositoryModel, completion: @escaping (Data?, NSError?, (message: String, status: Int)?) -> Void) {
         URLSession.shared.dataTask(with: URL(string: repository.owner.imageURL)!) { (data, res, err) in
-            let error = err as? NSError
-            completion(data ?? Data(), error)
+            if let error = err as NSError? {
+                completion(nil, error, nil)
+            }
+
+            let response = res as? HTTPURLResponse
+            let status = response?.statusCode ?? 0
+            let message = HTTPURLResponse.localizedString(forStatusCode: status)
+            guard status >= 200 && status <= 299 else {
+                completion(nil, nil, (message, status))
+                return
+            }
+            
+            completion(data, nil, nil)
         }.resume()
     }
 }
