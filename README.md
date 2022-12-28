@@ -63,8 +63,7 @@ Issues を確認した上、本プロジェクトを [**Duplicate** してくだ
 ライブラリの利用に関しては [こちらの記事](https://qiita.com/ykws/items/b951a2e24ca85013e722)も参照ください。
 
 ## Swiftの勉強期間
-2022年9月:
-- Swiftを独学で勉強開始。
+2022年9月: Swiftを独学で勉強開始。
 2022年10月 - 12月
 - Firebase(Auth, Firestore, Storage), MVVMのアーキテクチャでメモアプリをリリース
 - URL: https://github.com/kasiwa-mesi/SampleEmailLogin
