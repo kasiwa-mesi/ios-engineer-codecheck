@@ -31,6 +31,9 @@ final class DetailRepositoryViewModel: DetailRepositoryViewModelOutput {
     private let _updateImageData: PublishRelay<Data> = .init()
     lazy var updateImageDataObservable: Observable<Data> = _updateImageData.asObservable()
     
+    private let _updateLanguageLabel: PublishRelay<String> = .init()
+    lazy var updateLanguageLabelObservable: Observable<String> = _updateLanguageLabel.asObservable()
+    
     private var input: DetailRepositoryViewModelInput!
     init(repository: RepositoryModel, input: DetailRepositoryViewModelInput) {
         self._repository = repository
@@ -56,5 +59,13 @@ final class DetailRepositoryViewModel: DetailRepositoryViewModelOutput {
             
             self?._updateImageData.accept(data ?? Data())
         }
+    }
+    
+    func watchLanguageLabel() {
+        if repository.language != nil {
+            return
+        }
+        
+        self._updateLanguageLabel.accept(String.notSetLanguageLabel)
     }
 }

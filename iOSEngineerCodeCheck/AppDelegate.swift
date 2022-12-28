@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         monitor.pathUpdateHandler = { path in
-            if path.status != .satisfied {
+            if path.status == .satisfied {
                 DispatchQueue.main.async {
                     Router.shared.showRoot(window: UIWindow(frame: UIScreen.main.bounds))
                 }

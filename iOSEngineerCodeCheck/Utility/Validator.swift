@@ -25,7 +25,7 @@ enum Validator {
     var alertMessage: String {
         switch self {
         case .isEmptyWord:
-            return "検索バーに文字が入力されていません"
+            return String.isEmptyWord
         }
     }
 }

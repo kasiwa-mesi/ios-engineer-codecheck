@@ -99,10 +99,12 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelOutput, HasDispo
             
             if let res {
                 self?.input.showErrorAlert(code: res.status.description, message: res.message)
+                return
             }
             
             if let invalidURL {
                 self?.input.show(validationMessage: invalidURL)
+                return
             }
             
             self?._repositories = repositories ?? []
