@@ -24,7 +24,6 @@ class RepositoryTests: XCTestCase {
             XCTAssertEqual(repository.forksCount, 9888)
             XCTAssertEqual(repository.openIssuesCount, 6313)
             XCTAssertEqual(repository.language, "C++")
-            
             XCTAssertEqual(repository.owner.imageURL, "https://avatars.githubusercontent.com/u/10639145?v=4")
         } catch let error {
             print("ParseError: \(error)")
