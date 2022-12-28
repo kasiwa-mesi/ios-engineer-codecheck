@@ -10,6 +10,8 @@
 		077C28F05FA5C7E1C7F05E83 /* Pods_iOSEngineerCodeCheckTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A79D23E4A2545F22DAF67EE6 /* Pods_iOSEngineerCodeCheckTests.framework */; };
 		2720F163295C179A00C6ACEA /* ExampleJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2720F162295C179A00C6ACEA /* ExampleJSON.swift */; };
 		2720F165295C1AE000C6ACEA /* RepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2720F164295C1AE000C6ACEA /* RepositoryTests.swift */; };
+		2720F16A295C53DA00C6ACEA /* Offline.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2720F169295C53DA00C6ACEA /* Offline.storyboard */; };
+		2720F16C295C53FE00C6ACEA /* OfflineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2720F16B295C53FE00C6ACEA /* OfflineViewController.swift */; };
 		2722B4A7295B4BEA0019329A /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2722B4A6295B4BEA0019329A /* Validator.swift */; };
 		2722B4A9295B52E90019329A /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2722B4A8295B52E90019329A /* UIViewController+.swift */; };
 		2722B4AB295B53BE0019329A /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2722B4AA295B53BE0019329A /* String+.swift */; };
@@ -54,6 +56,8 @@
 /* Begin PBXFileReference section */
 		2720F162295C179A00C6ACEA /* ExampleJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleJSON.swift; sourceTree = "<group>"; };
 		2720F164295C1AE000C6ACEA /* RepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryTests.swift; sourceTree = "<group>"; };
+		2720F169295C53DA00C6ACEA /* Offline.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Offline.storyboard; sourceTree = "<group>"; };
+		2720F16B295C53FE00C6ACEA /* OfflineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineViewController.swift; sourceTree = "<group>"; };
 		2722B4A6295B4BEA0019329A /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
 		2722B4A8295B52E90019329A /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		2722B4AA295B53BE0019329A /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
@@ -130,6 +134,15 @@
 				721DC364272F17005F04F228 /* Pods-iOSEngineerCodeCheckTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		2720F168295C53C800C6ACEA /* Offline */ = {
+			isa = PBXGroup;
+			children = (
+				2720F169295C53DA00C6ACEA /* Offline.storyboard */,
+				2720F16B295C53FE00C6ACEA /* OfflineViewController.swift */,
+			);
+			path = Offline;
 			sourceTree = "<group>";
 		};
 		2723B8E829542739009D6258 /* SearchRepository */ = {
@@ -271,6 +284,7 @@
 		BFD945DD244DC5E80012785A /* iOSEngineerCodeCheck */ = {
 			isa = PBXGroup;
 			children = (
+				2720F168295C53C800C6ACEA /* Offline */,
 				2748B74F29598178008F9469 /* Utility */,
 				2748B74A295962F8008F9469 /* Extension */,
 				2728298D295852CA001F0DA8 /* View */,
@@ -417,6 +431,7 @@
 			files = (
 				2723B8EB295427FE009D6258 /* SearchRepository.storyboard in Resources */,
 				27543C2D295853C40044DBE4 /* TableViewCell.xib in Resources */,
+				2720F16A295C53DA00C6ACEA /* Offline.storyboard in Resources */,
 				BFD945EB244DC5EB0012785A /* LaunchScreen.storyboard in Resources */,
 				BFD945E8244DC5EB0012785A /* Assets.xcassets in Resources */,
 				2723B8F129542846009D6258 /* DetailRepository.storyboard in Resources */,
@@ -555,6 +570,7 @@
 				2748B751295981B2008F9469 /* API.swift in Sources */,
 				2722B4A7295B4BEA0019329A /* Validator.swift in Sources */,
 				275B0C42295438F000AE9CBF /* Router.swift in Sources */,
+				2720F16C295C53FE00C6ACEA /* OfflineViewController.swift in Sources */,
 				BFD945DF244DC5E80012785A /* AppDelegate.swift in Sources */,
 				2748B74C29596316008F9469 /* UITableViewCell+.swift in Sources */,
 				2722B4AB295B53BE0019329A /* String+.swift in Sources */,
@@ -730,7 +746,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 25BLMP2S3B;
 				INFOPLIST_FILE = iOSEngineerCodeCheck/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -749,7 +765,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 25BLMP2S3B;
 				INFOPLIST_FILE = iOSEngineerCodeCheck/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
