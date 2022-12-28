@@ -44,3 +44,98 @@ Issues を確認した上、本プロジェクトを [**Duplicate** してくだ
 
 提出された課題の評価ポイントに関しては、[こちらの記事](https://qiita.com/lovee/items/d76c68341ec3e7beb611)に詳しく書かれてありますので、ぜひご覧ください。
 ライブラリの利用に関しては [こちらの記事](https://qiita.com/ykws/items/b951a2e24ca85013e722)も参照ください。
+
+## 目次
+
+- [Swiftの勉強期間](https://github.com/kasiwa-mesi/ios-engineer-codecheck#Swiftの勉強期間)
+- [使用したライブラリ](https://github.com/kasiwa-mesi/ios-engineer-codecheck#使用したライブラリ)
+  - [CocoaPods](https://github.com/kasiwa-mesi/ios-engineer-codecheck#CocoaPods)
+- [注意して取り組んだ所](https://github.com/kasiwa-mesi/ios-engineer-codecheck#注意して取り組んだ所)
+  - [MVVMのアーキテクチャを意識](https://github.com/kasiwa-mesi/ios-engineer-codecheck#MVVMのアーキテクチャを意識)
+  - [エラーの抜け目が無いように意識](https://github.com/kasiwa-mesi/ios-engineer-codecheck#エラーの抜け目が無いように意識)
+  - [ネストを深くしない](https://github.com/kasiwa-mesi/ios-engineer-codecheck#ネストを深くしない)
+  - [ハードコーディングを避ける](https://github.com/kasiwa-mesi/ios-engineer-codecheck#ハードコーディングを避ける)
+- [追加した機能](https://github.com/kasiwa-mesi/ios-engineer-codecheck#追加した機能)
+  - [AppDelegateでオンライン・オフラインを監視](https://github.com/kasiwa-mesi/ios-engineer-codecheck#AppDelegateでオンライン・オフラインを監視)
+- [時間に余裕があれば何をするか](https://github.com/kasiwa-mesi/ios-engineer-codecheck#時間に余裕があれば何をするか)
+  - [テストの追加](https://github.com/kasiwa-mesi/ios-engineer-codecheck#テストの追加)
+  - [UIのブラッシュアップ](https://github.com/kasiwa-mesi/ios-engineer-codecheck#UIのブラッシュアップ)
+
+
+## Swiftの勉強期間
+2022年9月:
+- Swiftを独学で勉強開始。
+2022年10月 - 12月
+- Firebase(Auth, Firestore, Storage), MVVMのアーキテクチャでメモアプリをリリース
+- URL: https://github.com/kasiwa-mesi/SampleEmailLogin
+- 上記のGithubリポジトリに関して、知り合いのiOSエンジニアにコードレビューを依頼して、指摘していただいた内容を修正。
+
+## 使用したライブラリ
+### CocoaPods
+Swiftでリアクティブプログラミングをするために以下のライブラリを導入
+[RxSwift, RxCocoa](https://github.com/ReactiveX/RxSwift)
+[NSObject+Rx](https://github.com/RxSwiftCommunity/NSObject-Rx)
+[RxOptional](https://github.com/RxSwiftCommunity/RxOptional)
+
+## 注意して取り組んだ所
+### MVVMのアーキテクチャを意識
+既存のコードをMVVM(Model - View - ViewModel)の構成にリファクタリング。
+MVVMに基づいて、以下の点を注意した
+- ViewControllerにUIKitのパーツ以外のデータ(プロパティ)を持たない
+- ViewControllerにロジックを書かない(ex. if文)
+
+### エラーの抜け目が無いように意識
+GithubAPIを叩くときに「サーバーからエラーレスポンスをもらう場合」、「HTTPレスポンスコードが200番台出なかった場合」のエラーハンドリングを実装
+
+さらに、エラーが発生した場合、ユーザーにAlertを用いてエラー内容を伝えるように実装
+
+![](https://gyazo.com/6c6ac95f388051cf84f098514514284b/raw)
+
+### ネストを深くしない
+以下のように不正な入力があれば、早期returnするように改善した。また、できる限りメソッドがやるべき実装を最後に記述した。
+```
+func hoge(input: String?) {
+ if 不正な入力か判定 {
+   return
+ }
+ if 不正な入力か判定 {
+   return
+ }
+ if 不正な入力か判定 {
+   return
+ }
+
+ 本来このメソッドがやるべき処理
+}
+```
+
+### ハードコーディングを避ける
+各ファイルで使い回すダイアログの「"了解しました"」という文字列に関しては、修正するとき手間がかかる。
+
+以下のようにextensionでまとめた。
+```
+extension String {
+  static var ok: String { "了解しました" }
+}
+```
+
+## 追加した機能
+### AppDelegateでオンライン・オフラインを監視
+NSPathMonitorを利用してオンライン・オフラインを監視する機能を実装した。
+
+理由としては、検索バーで文字を入力する前に通信状況をユーザーに伝える方がユーザー体験が良いからである。
+
+![](https://gyazo.com/e4f73e1057ef56b7bf19d4d50332d240/raw)
+
+## 時間に余裕があれば何をするか
+### テストの追加
+RepositoryModel型がJSONを正しくdecodeできるか判断するテストしか存在していない。
+
+通信を代用するスタブを用いて、「成功した場合」, 「通信に失敗した場合」, 「レスポンスのデコードに失敗した場合」, 「エラーレスポンスを受け取った場合」の通信結果の処理に対するテストを作る
+
+### UIのブラッシュアップ
+現在のアプリはシンプルなデザインである。
+
+利便性を上げるために、以下の機能を追加したい。
+- 検索して表示するTableViewのCellに画像、リポジトリ名、プロジェクト言語を表示するように変更したい。
+- また、検索したリポジトリ一覧を更新日で並び替える機能を実装したい
