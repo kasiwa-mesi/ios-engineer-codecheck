@@ -1,5 +1,22 @@
 # 株式会社ゆめみ iOS エンジニアコードチェック課題
 
+## 目次
+
+- [Swiftの勉強期間](https://github.com/kasiwa-mesi/ios-engineer-codecheck#Swiftの勉強期間)
+- [使用したライブラリ](https://github.com/kasiwa-mesi/ios-engineer-codecheck#使用したライブラリ)
+  - [CocoaPods](https://github.com/kasiwa-mesi/ios-engineer-codecheck#CocoaPods)
+- [注意して取り組んだ所](https://github.com/kasiwa-mesi/ios-engineer-codecheck#注意して取り組んだ所)
+  - [MVVMのアーキテクチャを意識](https://github.com/kasiwa-mesi/ios-engineer-codecheck#MVVMのアーキテクチャを意識)
+  - [エラーの抜け目が無いように意識](https://github.com/kasiwa-mesi/ios-engineer-codecheck#エラーの抜け目が無いように意識)
+  - [ネストを深くしない](https://github.com/kasiwa-mesi/ios-engineer-codecheck#ネストを深くしない)
+  - [ハードコーディングを避ける](https://github.com/kasiwa-mesi/ios-engineer-codecheck#ハードコーディングを避ける)
+- [追加した機能](https://github.com/kasiwa-mesi/ios-engineer-codecheck#追加した機能)
+  - [AppDelegateでオンライン・オフラインを監視](https://github.com/kasiwa-mesi/ios-engineer-codecheck#AppDelegateでオンライン・オフラインを監視)
+- [時間に余裕があれば何をするか](https://github.com/kasiwa-mesi/ios-engineer-codecheck#時間に余裕があれば何をするか)
+  - [テストの追加](https://github.com/kasiwa-mesi/ios-engineer-codecheck#テストの追加)
+  - [UIのブラッシュアップ](https://github.com/kasiwa-mesi/ios-engineer-codecheck#UIのブラッシュアップ)
+
+
 ## 概要
 
 本プロジェクトは株式会社ゆめみ（以下弊社）が、弊社に iOS エンジニアを希望する方に出す課題のベースプロジェクトです。本課題が与えられた方は、下記の概要を詳しく読んだ上で課題を取り組んでください。
@@ -44,23 +61,6 @@ Issues を確認した上、本プロジェクトを [**Duplicate** してくだ
 
 提出された課題の評価ポイントに関しては、[こちらの記事](https://qiita.com/lovee/items/d76c68341ec3e7beb611)に詳しく書かれてありますので、ぜひご覧ください。
 ライブラリの利用に関しては [こちらの記事](https://qiita.com/ykws/items/b951a2e24ca85013e722)も参照ください。
-
-## 目次
-
-- [Swiftの勉強期間](https://github.com/kasiwa-mesi/ios-engineer-codecheck#Swiftの勉強期間)
-- [使用したライブラリ](https://github.com/kasiwa-mesi/ios-engineer-codecheck#使用したライブラリ)
-  - [CocoaPods](https://github.com/kasiwa-mesi/ios-engineer-codecheck#CocoaPods)
-- [注意して取り組んだ所](https://github.com/kasiwa-mesi/ios-engineer-codecheck#注意して取り組んだ所)
-  - [MVVMのアーキテクチャを意識](https://github.com/kasiwa-mesi/ios-engineer-codecheck#MVVMのアーキテクチャを意識)
-  - [エラーの抜け目が無いように意識](https://github.com/kasiwa-mesi/ios-engineer-codecheck#エラーの抜け目が無いように意識)
-  - [ネストを深くしない](https://github.com/kasiwa-mesi/ios-engineer-codecheck#ネストを深くしない)
-  - [ハードコーディングを避ける](https://github.com/kasiwa-mesi/ios-engineer-codecheck#ハードコーディングを避ける)
-- [追加した機能](https://github.com/kasiwa-mesi/ios-engineer-codecheck#追加した機能)
-  - [AppDelegateでオンライン・オフラインを監視](https://github.com/kasiwa-mesi/ios-engineer-codecheck#AppDelegateでオンライン・オフラインを監視)
-- [時間に余裕があれば何をするか](https://github.com/kasiwa-mesi/ios-engineer-codecheck#時間に余裕があれば何をするか)
-  - [テストの追加](https://github.com/kasiwa-mesi/ios-engineer-codecheck#テストの追加)
-  - [UIのブラッシュアップ](https://github.com/kasiwa-mesi/ios-engineer-codecheck#UIのブラッシュアップ)
-
 
 ## Swiftの勉強期間
 2022年9月:
