@@ -2,6 +2,7 @@
 platform :ios, '13.0'
 
 target 'iOSEngineerCodeCheck' do
+  inherit! :search_paths
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
@@ -17,6 +18,7 @@ target 'iOSEngineerCodeCheck' do
   end
 
   target 'iOSEngineerCodeCheckUITests' do
+    inherit! :search_paths
     # Pods for testing
   end
 
