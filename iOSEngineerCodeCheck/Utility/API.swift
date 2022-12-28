@@ -43,8 +43,8 @@ final class API {
         }.resume()
     }
     
-    func getImage(repository: RepositoryModel, completion: @escaping (Data?, NSError?, (message: String, status: Int)?, String?) -> Void) {
-        guard let url = URL(string: repository.owner.imageURL) else {
+    func getImage(imageURL: String, completion: @escaping (Data?, NSError?, (message: String, status: Int)?, String?) -> Void) {
+        guard let url = URL(string: imageURL) else {
             completion(nil, nil, nil, String.invalidImageURL)
             return
         }
