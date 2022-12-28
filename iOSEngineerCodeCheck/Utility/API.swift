@@ -12,12 +12,15 @@ final class API {
     static let shared = API()
     private init() {}
     
-    func fetchRepositories(word: String, completion: @escaping ([RepositoryModel]?, NSError?, (message: String, status: Int)?) -> Void) {
-        let url = "https://api.github.com/search/repositories?q=\(word)"
+    func fetchRepositories(word: String, completion: @escaping ([RepositoryModel]?, NSError?, (message: String, status: Int)?, String?) -> Void) {
+        guard let url = URL(string: "https://api.github.com/search/repositories?q=\(word)") else {
+            completion(nil, nil, nil, String.invalidURL)
+            return
+        }
         
-        URLSession.shared.dataTask(with: URL(string: url)!) { (data, res, err) in
+        URLSession.shared.dataTask(with: url) { (data, res, err) in
             if let responseError = err as NSError? {
-                completion(nil, responseError, nil)
+                completion(nil, responseError, nil, nil)
                 return
             }
             
@@ -25,7 +28,7 @@ final class API {
             let status = response?.statusCode ?? 0
             let message = HTTPURLResponse.localizedString(forStatusCode: status)
             guard status >= 200 && status <= 299 else {
-                completion(nil, nil, (message, status))
+                completion(nil, nil, (message, status), nil)
                 return
             }
             
@@ -33,17 +36,22 @@ final class API {
             do {
                 let githubResponse = try JSONDecoder().decode(GithubResponse.self, from: fixedData)
                 let models = githubResponse.items
-                completion(models, nil, nil)
+                completion(models, nil, nil, nil)
             } catch let parseError as NSError? {
-                completion(nil, parseError, nil)
+                completion(nil, parseError, nil, nil)
             }
         }.resume()
     }
     
-    func getImage(repository: RepositoryModel, completion: @escaping (Data?, NSError?, (message: String, status: Int)?) -> Void) {
-        URLSession.shared.dataTask(with: URL(string: repository.owner.imageURL)!) { (data, res, err) in
+    func getImage(repository: RepositoryModel, completion: @escaping (Data?, NSError?, (message: String, status: Int)?, String?) -> Void) {
+        guard let url = URL(string: repository.owner.imageURL) else {
+            completion(nil, nil, nil, String.invalidImageURL)
+            return
+        }
+        
+        URLSession.shared.dataTask(with: url) { (data, res, err) in
             if let error = err as NSError? {
-                completion(nil, error, nil)
+                completion(nil, error, nil, nil)
                 return
             }
             
@@ -51,11 +59,11 @@ final class API {
             let status = response?.statusCode ?? 0
             let message = HTTPURLResponse.localizedString(forStatusCode: status)
             guard status >= 200 && status <= 299 else {
-                completion(nil, nil, (message, status))
+                completion(nil, nil, (message, status), nil)
                 return
             }
             
-            completion(data, nil, nil)
+            completion(data, nil, nil, nil)
         }.resume()
     }
 }

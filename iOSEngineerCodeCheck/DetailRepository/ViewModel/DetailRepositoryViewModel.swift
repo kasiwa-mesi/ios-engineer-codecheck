@@ -38,7 +38,7 @@ final class DetailRepositoryViewModel: DetailRepositoryViewModelOutput {
     }
     
     func getImage() {
-        API.shared.getImage(repository: repository) { [weak self] data, error, res in
+        API.shared.getImage(repository: repository) { [weak self] data, error, res, invalidImageURL in
             if let error {
                 self?.input.showErrorAlert(code: error.code.description, message: error.localizedDescription)
                 return
@@ -46,6 +46,11 @@ final class DetailRepositoryViewModel: DetailRepositoryViewModelOutput {
             
             if let res {
                 self?.input.showErrorAlert(code: res.status.description, message: res.message)
+                return
+            }
+            
+            if let invalidImageURL {
+                self?.input.show(validationMessage: invalidImageURL)
                 return
             }
             

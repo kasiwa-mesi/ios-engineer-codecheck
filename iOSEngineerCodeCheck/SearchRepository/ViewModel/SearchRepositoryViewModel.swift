@@ -91,7 +91,7 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelOutput, HasDispo
         }
         
         self._loading.accept(true)
-        API.shared.fetchRepositories(word: word) { [weak self] repositories, error, res in
+        API.shared.fetchRepositories(word: word) { [weak self] repositories, error, res, invalidURL in
             if let error {
                 self?.input.showErrorAlert(code: error.code.description, message: error.localizedDescription)
                 return
@@ -99,6 +99,10 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelOutput, HasDispo
             
             if let res {
                 self?.input.showErrorAlert(code: res.status.description, message: res.message)
+            }
+            
+            if let invalidURL {
+                self?.input.show(validationMessage: invalidURL)
             }
             
             self?._repositories = repositories ?? []
